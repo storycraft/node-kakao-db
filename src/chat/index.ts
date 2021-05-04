@@ -36,7 +36,7 @@ export function chatlogToModel(chatlog: Chatlog): ChatlogModel {
     senderId: chatlog.sender.userId,
     type: chatlog.type,
     text: chatlog.text,
-    sendAt: chatlog.sendAt,
+    sendAt: Math.floor(chatlog.sendAt / 1000),
     messageId: Long.fromValue(chatlog.messageId),
     attachment: chatlog.attachment,
     supplement: chatlog.supplement
@@ -53,7 +53,7 @@ export function partialChatlogToModel(chatlog: Partial<Chatlog>): Partial<Chatlo
   
   if ('type' in chatlog) partial.type = chatlog.type;
   if ('text' in chatlog) partial.text = chatlog.text;
-  if ('sendAt' in chatlog) partial.sendAt = chatlog.sendAt;
+  if ('sendAt' in chatlog) partial.sendAt = Math.floor(chatlog.sendAt / 1000);
   if (chatlog.messageId != null) partial.messageId = Long.fromValue(chatlog.messageId);
 
   if ('attachment' in chatlog) partial.attachment = chatlog.attachment;
@@ -75,7 +75,7 @@ export function modelToChatlog(model: ChatlogModel): Chatlog {
     sender: { userId: model.senderId },
     type: model.type,
     text: model.text,
-    sendAt: model.sendAt,
+    sendAt: model.sendAt * 1000,
     messageId: model.messageId,
     attachment: model.attachment,
     supplement: model.supplement
