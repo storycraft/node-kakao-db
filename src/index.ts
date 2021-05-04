@@ -53,10 +53,24 @@ export class NodeKakaoDB {
   }
 
   /**
-   * Login to new client using credential and user id.
+   * Create new TalkClient with database loader
    *
-   * Do not explicitly relogin with another account with created TalkClient.
+   * Do not login with another account other than provided userId.
    * It may result database corruption.
+   *
+   * @param {Long | number} userId User id, used for database identifier
+   * @return {TalkClient} TalkClient with database loader
+   */
+  create(userId: Long | number): TalkClient {
+    return new TalkClient(
+      this._config,
+      new NKDBClientDataLoader(this._rootDir, `user$${userId.toString()}`, this._pathResolver),
+      this._sessionFactory
+    );
+  }
+
+  /**
+   * Create new client and login using credential and user id.
    *
    * @param {Long | number} userId Account id, used for database identifier
    * @param {OAuthCredential} credential Account credential
@@ -65,11 +79,7 @@ export class NodeKakaoDB {
     userId: Long | number,
     credential: OAuthCredential
   ): AsyncCommandResult<ClientResult> {
-    const client = new TalkClient(
-      this._config,
-      new NKDBClientDataLoader(this._rootDir, `user$${userId.toString()}`, this._pathResolver),
-      this._sessionFactory
-    );
+    const client = this.create(userId);
 
     const loginRes = await client.login(credential);
     if (!loginRes.success) return loginRes;

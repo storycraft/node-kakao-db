@@ -4,6 +4,7 @@
       "ES2020"
     ],
     "module": "umd",
+    "declaration": true,
     "outDir": "dist",
     "moduleResolution": "node",
     "target": "ES2020",
