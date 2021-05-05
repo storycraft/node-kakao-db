@@ -68,16 +68,14 @@ implements UpdatableChannelDataStore<T, U> {
   }
 
   getReadCount(chat: ChatLogged): number {
-    return this._db.get('watermarks').filter((val) => {
-      return chat.logId.greaterThanOrEqual(val);
-    }).size().value();
+    return this._db.get('watermarks').filter((val) => chat.logId.lessThanOrEqual(val)).size().value();
   }
 
   getReaders(chat: ChatLogged): Readonly<U>[] {
     const userEntry = this._db.get('users');
 
     return this._db.get('watermarks').entries()
-      .filter(([, val]) => chat.logId.greaterThanOrEqual(val))
+      .filter((entries) => chat.logId.lessThanOrEqual(entries[1]))
       .map(([userId]) => userEntry.get(userId).value()).value() as U[];
   }
 
