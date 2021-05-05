@@ -76,9 +76,9 @@ implements UpdatableChannelDataStore<T, U> {
   getReaders(chat: ChatLogged): Readonly<U>[] {
     const userEntry = this._db.get('users');
 
-    return this._db.get('watermarks')
-      .filter((val) => chat.logId.greaterThanOrEqual(val))
-      .map((val) => userEntry.get(val).value()).value() as U[];
+    return this._db.get('watermarks').entries()
+      .filter(([, val]) => chat.logId.greaterThanOrEqual(val))
+      .map(([userId]) => userEntry.get(userId).value()).value() as U[];
   }
 
   updateInfo(info: Partial<T>): void {
