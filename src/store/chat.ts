@@ -39,7 +39,7 @@ export class ChatListStore implements UpdatableChatListStore {
 
   async updateChat(logId: Long, chat: Partial<Chatlog>): Promise<void> {
     const res = updates(CHATLOG_SCHEMA, partialChatlogToModel(chat));
-    this._db.prepare(`UPDATE chats SET ${res.placeholders} WHERE logId = ?`).run(...res.values, logId);
+    this._db.prepare(`UPDATE chats SET ${res.placeholders} WHERE logId = ?`).run(...res.values, logId.toString());
   }
 
   async removeChat(logId: Long): Promise<boolean> {
