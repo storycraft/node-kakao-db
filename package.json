@@ -1,6 +1,6 @@
 {
   "name": "node-kakao-db",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NodeKakao extension, which uses local database for client data",
   "main": "dist/index.js",
   "keywords": [

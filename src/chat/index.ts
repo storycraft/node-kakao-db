@@ -53,7 +53,7 @@ export function partialChatlogToModel(chatlog: Partial<Chatlog>): Partial<Chatlo
   
   if ('type' in chatlog) partial.type = chatlog.type;
   if ('text' in chatlog) partial.text = chatlog.text;
-  if ('sendAt' in chatlog) partial.sendAt = Math.floor(chatlog.sendAt / 1000);
+  if ('sendAt' in chatlog) partial.sendAt = chatlog.sendAt ? Math.floor(chatlog.sendAt / 1000) : 0;
   if (chatlog.messageId != null) partial.messageId = Long.fromValue(chatlog.messageId);
 
   if ('attachment' in chatlog) partial.attachment = chatlog.attachment;
