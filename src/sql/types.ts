@@ -29,7 +29,7 @@ export const LongInteger: SchemaType<Long> = {
     return value.toString();
   },
 
-  deserialize(rawValue: { high: number, low: number }): Long {
+  deserialize(rawValue: string): Long {
     return Long.fromValue(rawValue);
   }
 

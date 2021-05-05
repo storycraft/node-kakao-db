@@ -25,8 +25,8 @@ describe('SQL API', () => {
 
   it('Update', () => {
     const res = sql.updates(TEST_SCHEMA, { 'test': 2, 'test2': undefined });
-    assert.equal(res.placeholders, '?=?,?=?');
-    assert.deepEqual(res.values, ['test', 2, 'test2', null]);
+    assert.equal(res.placeholders, 'test=?,test2=?');
+    assert.deepEqual(res.values, [2, null]);
   });
 
   it('Table', () => {
